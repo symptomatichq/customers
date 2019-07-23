@@ -8,16 +8,16 @@ import (
 
 	"google.golang.org/grpc"
 
-	pb "github.com/symptomatichq/protos/customers"
 	"github.com/symptomatichq/customers/endpoint"
 	"github.com/symptomatichq/customers/service"
+	_ "github.com/symptomatichq/customers/telemetry" // load telemetry
 	"github.com/symptomatichq/customers/transport"
-	_ "github.com/symptomatichq/customers/telemetry"  // load telemetry
 	"github.com/symptomatichq/kit/env"
 	"github.com/symptomatichq/kit/graceful"
 	"github.com/symptomatichq/kit/health"
 	"github.com/symptomatichq/kit/logutil"
 	"github.com/symptomatichq/kit/pgutil"
+	pb "github.com/symptomatichq/protos/customers"
 )
 
 var (
@@ -45,11 +45,11 @@ func main() {
 
 	endpoints := endpoint.Endpoints{
 		CreateAccountEndpoint: transport.MakeGRPCCreateAccountEndpoint(svc),
-		GetAccountEndpoint:      transport.MakeGRPCGetAccountEndpoint(svc),
-		FetchAccountsEndpoint:     transport.MakeGRPCFetchAccountsEndpoint(svc),
-		CreateUserEndpoint: transport.MakeGRPCCreateUserEndpoint(svc),
-		GetUserEndpoint:      transport.MakeGRPCGetUserEndpoint(svc),
-		FetchUsersEndpoint:     transport.MakeGRPCFetchUsersEndpoint(svc),
+		GetAccountEndpoint:    transport.MakeGRPCGetAccountEndpoint(svc),
+		FetchAccountsEndpoint: transport.MakeGRPCFetchAccountsEndpoint(svc),
+		CreateUserEndpoint:    transport.MakeGRPCCreateUserEndpoint(svc),
+		GetUserEndpoint:       transport.MakeGRPCGetUserEndpoint(svc),
+		FetchUsersEndpoint:    transport.MakeGRPCFetchUsersEndpoint(svc),
 	}
 
 	addr, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
