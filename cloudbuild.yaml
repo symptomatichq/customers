@@ -1,0 +1,2 @@
+steps:
+- gcr.io/cloudbuild/docker
